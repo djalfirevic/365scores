@@ -7,7 +7,6 @@
 //
 
 #import "HomeTableViewController.h"
-#import "WebServiceManager.h"
 #import "DataManager.h"
 #import "GameTableViewCell.h"
 #import "CompetitionTableViewCell.h"
@@ -18,30 +17,13 @@
 
 @implementation HomeTableViewController
 
-#pragma mark - Properties
-
-- (NSMutableArray *)itemsArray {
-    if (!_itemsArray) {
-        _itemsArray = [[NSMutableArray alloc] init];
-    }
-    
-    return _itemsArray;
-}
-
 #pragma mark - Private API
 
 - (void)loadData {
-    [[WebServiceManager sharedInstance] requestDataFromURL:[NSString stringWithFormat:@"%@%@", MAIN_URL, GAMES_URL]
-                                                withLoader:YES
-                                            withCompletion:^(BOOL success, NSDictionary *dictionary, NSError *error)
-    {
-        if (success) {
-            [[DataManager sharedInstance] prepareData:dictionary completion:^(NSMutableArray *itemsArray) {
-                self.itemsArray = itemsArray;
-                
-                [self.tableView reloadData];
-            }];
-        }
+    [[DataManager sharedInstance] prepareDataWithCompletion:^(NSMutableArray *itemsArray) {
+        self.itemsArray = itemsArray;
+        
+        [self.tableView reloadData];
     }];
 }
 
@@ -51,8 +33,8 @@
     [super viewDidLoad];
     
     self.tableView.tableFooterView = [[UIView alloc] init];
-    [self loadData];
     
+    [self loadData];
 }
 
 #pragma mark - UITableViewDataSource

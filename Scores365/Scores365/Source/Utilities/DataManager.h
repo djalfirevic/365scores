@@ -10,5 +10,5 @@
 
 @interface DataManager : NSObject
 + (id)sharedInstance;
-- (void)prepareData:(NSDictionary *)dictionary completion:(void (^)(NSMutableArray *itemsArray))handler;
+- (void)prepareDataWithCompletion:(void (^)(NSMutableArray *itemsArray))handler;
 @end
