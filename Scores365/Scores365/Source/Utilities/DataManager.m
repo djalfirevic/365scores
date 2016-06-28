@@ -12,6 +12,8 @@
 #import "Country.h"
 #import "Game.h"
 
+#define kTimerTick 5.0
+
 @interface DataManager()
 @property (strong, nonatomic) NSMutableArray *countriesArray;
 @property (strong, nonatomic) NSMutableArray *gamesArray;
@@ -93,8 +95,50 @@
      {
          if (success) {
              NSLog(@"Update: %@", dictionary);
+             
+             [self parseDataFromDictionary:dictionary withCompletion:^{
+                 
+             }];
          }
      }];
+}
+
+- (void)parseDataFromDictionary:(NSDictionary *)dictionary withCompletion:(void (^)(void))handler {
+    NSLog(@"%@", dictionary);
+    
+    self.lastUpdateID = [JSONNullChecker parseINT:dictionary[@"LastUpdateID"]];
+    
+    // Parse countries
+    for (NSDictionary *countryDictionary in dictionary[@"Countries"]) {
+        Country *country = [[Country alloc] initFromDictionary:countryDictionary];
+        [self.countriesArray addObject:country];
+    }
+    
+    // Parse games
+    for (NSDictionary *gameDictionary in dictionary[@"Games"]) {
+        Game *game = [[Game alloc] initFromDictionary:gameDictionary];
+        [self.gamesArray addObject:game];
+    }
+    
+    // Parse competitions
+    for (NSDictionary *competitionDictionary in dictionary[@"Competitions"]) {
+        Competition *competition = [[Competition alloc] initFromDictionary:competitionDictionary];
+        competition.gamesArray = [self getGamesByCompetitionID:competition.ID];
+        [self.competitionsArray addObject:competition];
+    }
+    
+    handler();
+}
+
+- (NSMutableArray *)prepareResults {
+    NSMutableArray *resultsArray = [[NSMutableArray alloc] init];
+    
+    for (Competition *competition in self.competitionsArray) {
+        [resultsArray addObject:competition];
+        [resultsArray addObjectsFromArray:competition.gamesArray];
+    }
+
+    return resultsArray;
 }
 
 #pragma mark - Public API
@@ -105,39 +149,18 @@
                                             withCompletion:^(BOOL success, NSDictionary *dictionary, NSError *error)
      {
          if (success) {
-             NSLog(@"%@", dictionary);
-             
-             self.lastUpdateID = [JSONNullChecker parseINT:dictionary[@"LastUpdateID"]];
-             self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(updateData) userInfo:nil repeats:YES];
-             
-             // Parse countries
-             for (NSDictionary *countryDictionary in dictionary[@"Countries"]) {
-                 Country *country = [[Country alloc] initFromDictionary:countryDictionary];
-                 [self.countriesArray addObject:country];
-             }
-             
-             // Parse games
-             for (NSDictionary *gameDictionary in dictionary[@"Games"]) {
-                 Game *game = [[Game alloc] initFromDictionary:gameDictionary];
-                 [self.gamesArray addObject:game];
-             }
-             
-             // Parse competitions
-             for (NSDictionary *competitionDictionary in dictionary[@"Competitions"]) {
-                 Competition *competition = [[Competition alloc] initFromDictionary:competitionDictionary];
-                 competition.gamesArray = [self getGamesByCompetitionID:competition.ID];
-                 [self.competitionsArray addObject:competition];
-             }
-             
-             // Prepare results
-             NSMutableArray *resultsArray = [[NSMutableArray alloc] init];
-             
-             for (Competition *competition in self.competitionsArray) {
-                 [resultsArray addObject:competition];
-                 [resultsArray addObjectsFromArray:competition.gamesArray];
-             }
-             
-             handler(resultsArray);
+             [self parseDataFromDictionary:dictionary withCompletion:^{
+                 NSMutableArray *resultsArray = [self prepareResults];
+                 
+                 handler(resultsArray);
+                 
+                 // Initialize timer
+                 self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:kTimerTick
+                                                                     target:self
+                                                                   selector:@selector(updateData)
+                                                                   userInfo:nil
+                                                                    repeats:YES];
+             }];
          } else {
              handler(nil);
          }
