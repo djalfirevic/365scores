@@ -12,4 +12,5 @@
 @property (weak, nonatomic) IBOutlet AsyncImageView *awayAsyncImageView;
 @property (weak, nonatomic) IBOutlet UILabel *awayTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *endedLabel;
 @end

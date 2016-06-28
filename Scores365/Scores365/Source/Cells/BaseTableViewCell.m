@@ -30,4 +30,12 @@
     return EMPTY_STRING;
 }
 
+#pragma mark - Cell lifecycle
+
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    
+    self.asyncImageView.image = nil;
+}
+
 @end

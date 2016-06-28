@@ -18,4 +18,5 @@
 @property (nonatomic) NSMutableArray *competitorsArray;
 
 - (NSString *)score;
+- (BOOL)hasEnded;
 @end

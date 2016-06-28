@@ -8,6 +8,7 @@
 
 #import "AsyncImageView.h"
 #import "Reachability.h"
+#import "UIImage+WebP.h"
 
 @implementation AsyncImageView
 
@@ -22,7 +23,7 @@
             NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageURL]];
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                self.image = [UIImage imageWithData:data];
+                self.image = [UIImage imageWithWebPData:data];
             });
         });
     }

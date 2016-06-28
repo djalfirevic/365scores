@@ -33,8 +33,19 @@
             
             // Score
             self.scoreLabel.text = [game score];
+            
+            // Ended
+            self.endedLabel.hidden = ![game hasEnded];
         }
     }
+}
+
+#pragma mark - Cell lifecycle
+
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    
+    self.awayAsyncImageView.image = nil;
 }
 
 @end

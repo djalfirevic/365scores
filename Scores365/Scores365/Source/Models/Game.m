@@ -52,11 +52,22 @@
     NSNumber *first = self.scoresArray[0];
     NSNumber *second = self.scoresArray[1];
     
-    if ([first integerValue] == -1 && [second integerValue] == -1) {
+    if (![self hasEnded]) {
         return [self humanReadableStartTime];
     }
     
     return [NSString stringWithFormat:@"%ld - %ld", (long)[first integerValue], (long)[second integerValue]];
+}
+
+- (BOOL)hasEnded {
+    NSNumber *first = self.scoresArray[0];
+    NSNumber *second = self.scoresArray[1];
+    
+    if ([first integerValue] == -1 && [second integerValue] == -1) {
+        return NO;
+    }
+    
+    return YES;
 }
 
 #pragma mark - Private API

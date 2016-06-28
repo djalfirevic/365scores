@@ -98,12 +98,24 @@
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ended" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5k4-1o-YZt">
+                                                    <rect key="frame" x="19" y="29" width="31" height="14"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="14" id="Jeq-OQ-QVn"/>
+                                                        <constraint firstAttribute="width" constant="31" id="Vt8-Bd-p6Z"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="10"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" red="0.15294117647058825" green="0.17254901960784313" blue="0.1764705882352941" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstItem="XcS-xj-ou6" firstAttribute="centerX" secondItem="Uea-sM-1lO" secondAttribute="centerX" id="5O8-ty-w6f"/>
                                                 <constraint firstAttribute="height" constant="44" id="AwI-99-vta"/>
+                                                <constraint firstItem="5k4-1o-YZt" firstAttribute="centerX" secondItem="Uea-sM-1lO" secondAttribute="centerX" id="Ceb-wh-Q3S"/>
                                                 <constraint firstAttribute="width" constant="70" id="OgE-Lb-Hud"/>
+                                                <constraint firstAttribute="bottom" secondItem="5k4-1o-YZt" secondAttribute="bottom" constant="0.5" id="Vcq-DE-PVZ"/>
                                                 <constraint firstItem="XcS-xj-ou6" firstAttribute="centerY" secondItem="Uea-sM-1lO" secondAttribute="centerY" id="dRv-BT-Agr"/>
                                             </constraints>
                                         </view>
@@ -132,6 +144,7 @@
                                     <outlet property="asyncImageView" destination="y5a-d5-L7W" id="pYt-Br-Bup"/>
                                     <outlet property="awayAsyncImageView" destination="rAx-11-wU6" id="ON2-vj-lJ4"/>
                                     <outlet property="awayTitleLabel" destination="JbO-eX-uJQ" id="b28-dy-sTb"/>
+                                    <outlet property="endedLabel" destination="5k4-1o-YZt" id="p0n-Ys-FPm"/>
                                     <outlet property="scoreLabel" destination="XcS-xj-ou6" id="UIy-jD-0xj"/>
                                     <outlet property="titleLabel" destination="uXu-r2-Fck" id="gBf-Uo-6yq"/>
                                 </connections>
