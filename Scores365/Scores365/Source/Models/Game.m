@@ -51,14 +51,10 @@
 - (NSString *)score {
     static NSString *const MINUS_ONE = @"-1";
     
+    NSLog(@"%@", self.scoresArray);
+    
     NSDecimalNumber *firstScore = self.scoresArray[0];
     NSDecimalNumber *secondScore = self.scoresArray[1];
-    
-    NSLog(@"%@", self.scoresArray[1]);
-    
-    if ([secondScore isEqualToValue:) {
-        NSLog(@"jesu stringovi");
-    }
     
     if ([firstScore isKindOfClass:[NSString class]]) {
         NSString *first = (NSString *)firstScore;
