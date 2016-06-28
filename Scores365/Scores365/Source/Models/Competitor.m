@@ -13,9 +13,11 @@
 #pragma mark - Public API
 
 - (NSString *)imageURL {
-    //return [NSString stringWithFormat:@"%@image/upload/w_48,h_48,c_limit,f_webp,q_90,d_Competitors:default1.png/Competitors/%ld", IMAGE_CACHE_URL, (long)self.ID];
+    NSString *url = [NSString stringWithFormat:@"%@image/upload/w_48,h_48,c_limit,f_webp,q_90,d_Competitors:default1.png/Competitors/%ld",
+                     IMAGE_CACHE_URL,
+                     (long)self.ID];
     
-    return @"http://img.wennermedia.com/social/481868694_kim-kardashian-zoom-10e8fb5f-d072-4bff-b89a-81b5bc01ae89.jpg";
+    return url;
 }
 
 @end

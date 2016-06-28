@@ -31,7 +31,7 @@
         self.startTimeString = [JSONNullChecker parseSTRING:[dictionary objectForKey:@"STime"]];
         
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        dateFormatter.dateFormat = @"MM-dd-yyyy HH:mm";
+        dateFormatter.dateFormat = @"dd-MM-yyyy HH:mm";
         self.startTime = [dateFormatter dateFromString:self.startTimeString];
         
         self.scoresArray = [dictionary objectForKey:@"Scrs"];
@@ -49,26 +49,14 @@
 #pragma mark - Public API
 
 - (NSString *)score {
-    static NSString *const MINUS_ONE = @"-1";
+    NSNumber *first = self.scoresArray[0];
+    NSNumber *second = self.scoresArray[1];
     
-    NSLog(@"%@", self.scoresArray);
-    
-    NSDecimalNumber *firstScore = self.scoresArray[0];
-    NSDecimalNumber *secondScore = self.scoresArray[1];
-    
-    if ([firstScore isKindOfClass:[NSString class]]) {
-        NSString *first = (NSString *)firstScore;
-        
-        if ([secondScore isKindOfClass:[NSString class]]) {
-            NSString *second = (NSString *)secondScore;
-            
-            if ([first isEqualToString:MINUS_ONE] && [second isEqualToString:MINUS_ONE]) {
-                return [self humanReadableStartTime];
-            }
-        }
+    if ([first integerValue] == -1 && [second integerValue] == -1) {
+        return [self humanReadableStartTime];
     }
     
-    return [NSString stringWithFormat:@"%@ - %@", firstScore, secondScore];
+    return [NSString stringWithFormat:@"%ld - %ld", (long)[first integerValue], (long)[second integerValue]];
 }
 
 #pragma mark - Private API

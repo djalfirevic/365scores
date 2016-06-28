@@ -32,7 +32,6 @@
             self.awayTitleLabel.text = away.name;
             
             // Score
-            NSLog(@"%@", game.scoresArray);
             self.scoreLabel.text = [game score];
         }
     }

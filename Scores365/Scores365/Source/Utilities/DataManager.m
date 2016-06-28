@@ -73,6 +73,16 @@
     return gamesArray;
 }
 
+- (NSString *)getCountryNameCountryID:(NSInteger)countryID {
+    for (Country *country in self.countriesArray) {
+        if (country.ID == countryID) {
+            return country.name;
+        }
+    }
+    
+    return nil;
+}
+
 #pragma mark - Public API
 
 - (void)prepareData:(NSDictionary *)dictionary completion:(void (^)(NSMutableArray *itemsArray))handler {

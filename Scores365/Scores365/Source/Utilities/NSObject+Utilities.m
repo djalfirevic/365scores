@@ -11,6 +11,8 @@
 
 @implementation NSObject (Utilities)
 
+#pragma mark - Public API
+
 - (BOOL)hasInternetConnection {
     Reachability *reach	= [Reachability reachabilityForInternetConnection];
     NetworkStatus status = [reach currentReachabilityStatus];
