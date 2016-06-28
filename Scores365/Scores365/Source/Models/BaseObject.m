@@ -27,4 +27,8 @@
     return EMPTY_STRING;
 }
 
+- (void)logData {
+    NSLog(@"%@", self.name);
+}
+
 @end

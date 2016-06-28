@@ -10,6 +10,16 @@
 
 @implementation Competition
 
+#pragma mark - Properties
+
+- (NSMutableArray *)gamesArray {
+    if (!_gamesArray) {
+        _gamesArray = [[NSMutableArray alloc] init];
+    }
+    
+    return _gamesArray;
+}
+
 #pragma mark - Designated Initializer
 
 - (instancetype)initFromDictionary:(NSDictionary *)dictionary {

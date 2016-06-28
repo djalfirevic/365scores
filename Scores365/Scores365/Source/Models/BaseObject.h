@@ -14,4 +14,5 @@
 
 - (instancetype)initFromDictionary:(NSDictionary *)dictionary;
 - (NSString *)imageURL;
+- (void)logData;
 @end

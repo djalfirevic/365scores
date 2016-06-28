@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface DataManager : NSObject
-@property (strong, nonatomic) NSMutableArray *countriesArray;
-
 + (id)sharedInstance;
+- (void)prepareData:(NSDictionary *)dictionary completion:(void (^)(NSMutableArray *itemsArray))handler;
 @end

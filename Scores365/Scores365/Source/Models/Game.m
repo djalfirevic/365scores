@@ -48,6 +48,35 @@
 
 #pragma mark - Public API
 
+- (NSString *)score {
+    static NSString *const MINUS_ONE = @"-1";
+    
+    NSDecimalNumber *firstScore = self.scoresArray[0];
+    NSDecimalNumber *secondScore = self.scoresArray[1];
+    
+    NSLog(@"%@", self.scoresArray[1]);
+    
+    if ([secondScore isEqualToValue:) {
+        NSLog(@"jesu stringovi");
+    }
+    
+    if ([firstScore isKindOfClass:[NSString class]]) {
+        NSString *first = (NSString *)firstScore;
+        
+        if ([secondScore isKindOfClass:[NSString class]]) {
+            NSString *second = (NSString *)secondScore;
+            
+            if ([first isEqualToString:MINUS_ONE] && [second isEqualToString:MINUS_ONE]) {
+                return [self humanReadableStartTime];
+            }
+        }
+    }
+    
+    return [NSString stringWithFormat:@"%@ - %@", firstScore, secondScore];
+}
+
+#pragma mark - Private API
+
 - (NSString *)humanReadableStartTime {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"dd/MM HH:mm";

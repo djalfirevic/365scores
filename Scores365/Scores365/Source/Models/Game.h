@@ -17,5 +17,5 @@
 @property (nonatomic) NSArray *scoresArray;
 @property (nonatomic) NSMutableArray *competitorsArray;
 
-- (NSString *)humanReadableStartTime;
+- (NSString *)score;
 @end

@@ -21,7 +21,6 @@
         Game *game = (Game *)baseObject;
         
         if (game.competitorsArray.count == 2) {
-            
             // Home
             Competitor *home = [game.competitorsArray firstObject];
             self.asyncImageView.imageURL = [home imageURL];
@@ -31,6 +30,10 @@
             Competitor *away = [game.competitorsArray lastObject];
             self.awayAsyncImageView.imageURL = [away imageURL];
             self.awayTitleLabel.text = away.name;
+            
+            // Score
+            NSLog(@"%@", game.scoresArray);
+            self.scoreLabel.text = [game score];
         }
     }
 }

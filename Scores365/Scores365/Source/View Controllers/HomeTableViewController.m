@@ -11,8 +11,6 @@
 #import "DataManager.h"
 #import "GameTableViewCell.h"
 #import "CompetitionTableViewCell.h"
-#import "Competition.h"
-#import "Country.h"
 
 @interface HomeTableViewController()
 @property (strong, nonatomic) NSMutableArray *itemsArray;
@@ -38,22 +36,11 @@
                                             withCompletion:^(BOOL success, NSDictionary *dictionary, NSError *error)
     {
         if (success) {
-            
-            // Parse countries
-            for (NSDictionary *countryDictionary in dictionary[@"Countries"]) {
-                Country *country = [[Country alloc] initFromDictionary:countryDictionary];
-                [[[DataManager sharedInstance] countriesArray] addObject:country];
-            }
-            
-            NSLog(@"%@", dictionary[@"Games"]);
-            //NSLog(@"%@", dictionary[@"Competitions"]);
-            
-            for (NSDictionary *competitionDictionary in dictionary[@"Competitions"]) {
-                Competition *competition = [[Competition alloc] initFromDictionary:competitionDictionary];
-                [self.itemsArray addObject:competition];
-            }
-            
-            [self.tableView reloadData];
+            [[DataManager sharedInstance] prepareData:dictionary completion:^(NSMutableArray *itemsArray) {
+                self.itemsArray = itemsArray;
+                
+                [self.tableView reloadData];
+            }];
         }
     }];
 }
