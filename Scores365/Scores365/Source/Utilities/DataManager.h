@@ -8,7 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol DataManagerDelegate <NSObject>
+@optional
+- (void)dataUpdatedAtIndex:(NSInteger)index;
+@end
+
 @interface DataManager : NSObject
+@property (weak, nonatomic) id<DataManagerDelegate> delegate;
 + (id)sharedInstance;
 - (void)prepareDataWithCompletion:(void (^)(NSMutableArray *itemsArray))handler;
 @end

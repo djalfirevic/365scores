@@ -18,6 +18,7 @@
 @property (strong, nonatomic) NSMutableArray *countriesArray;
 @property (strong, nonatomic) NSMutableArray *gamesArray;
 @property (strong, nonatomic) NSMutableArray *competitionsArray;
+@property (strong, nonatomic) NSMutableArray *resultsArray;
 @property (strong, nonatomic) NSTimer *updateTimer;
 @property (nonatomic) NSInteger lastUpdateID;
 @end
@@ -50,6 +51,14 @@
     return _competitionsArray;
 }
 
+- (NSMutableArray *)resultsArray {
+    if (!_resultsArray) {
+        _resultsArray = [[NSMutableArray alloc] init];
+    }
+    
+    return _resultsArray;
+}
+
 #pragma mark - Singleton
 
 + (DataManager *)sharedInstance {
@@ -62,6 +71,60 @@
     }
     
     return sharedManager;
+}
+
+#pragma mark - Public API
+
+- (void)prepareDataWithCompletion:(void (^)(NSMutableArray *itemsArray))handler {
+    [[WebServiceManager sharedInstance] requestDataFromURL:[NSString stringWithFormat:@"%@%@", MAIN_URL, GAMES_URL]
+                                                withLoader:YES
+                                            withCompletion:^(BOOL success, NSDictionary *dictionary, NSError *error)
+     {
+         if (success) {
+             [self parseDataFromDictionary:dictionary withCompletion:^{
+                 [self prepareResults];
+                 
+                 handler(self.resultsArray);
+                 
+                 // Initialize timer
+                 self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:kTimerTick
+                                                                     target:self
+                                                                   selector:@selector(updateData)
+                                                                   userInfo:nil
+                                                                    repeats:YES];
+             }];
+         } else {
+             handler(nil);
+         }
+     }];
+}
+
+- (void)mergeObject:(BaseObject *)object {
+    
+    // Games
+    if ([object isKindOfClass:[Game class]]) {
+        Game *game = (Game *)object;
+        
+        NSInteger index = [self gameAlreadyExists:game.ID];
+        if (index != INT_MAX) {
+            if ([self.delegate respondsToSelector:@selector(dataUpdatedAtIndex:)]) {
+                [self.delegate dataUpdatedAtIndex:index];
+            }
+        }
+    }
+    
+    // Competitions
+    if ([object isKindOfClass:[Competition class]]) {
+        Competition *competition = (Competition *)object;
+        
+        NSInteger index = [self competitionAlreadyExists:competition.ID];
+        if (index != INT_MAX) {
+            if ([self.delegate respondsToSelector:@selector(dataUpdatedAtIndex:)]) {
+                [self.delegate dataUpdatedAtIndex:index];
+            }
+        }
+    }
+    
 }
 
 #pragma mark - Private API
@@ -96,9 +159,34 @@
          if (success) {
              NSLog(@"Update: %@", dictionary);
              
-             [self parseDataFromDictionary:dictionary withCompletion:^{
-                 
-             }];
+             self.lastUpdateID = [JSONNullChecker parseINT:dictionary[@"LastUpdateID"]];
+             NSMutableArray *resultsArray = [NSMutableArray array];
+             
+             // Parse countries
+             for (NSDictionary *countryDictionary in dictionary[@"Countries"]) {
+                 Country *country = [[Country alloc] initFromDictionary:countryDictionary];
+                 [self.countriesArray addObject:country];
+                 [resultsArray addObject:country];
+             }
+             
+             // Parse games
+             for (NSDictionary *gameDictionary in dictionary[@"Games"]) {
+                 Game *game = [[Game alloc] initFromDictionary:gameDictionary];
+                 [self.gamesArray addObject:game];
+                 [resultsArray addObject:game];
+             }
+             
+             // Parse competitions
+             for (NSDictionary *competitionDictionary in dictionary[@"Competitions"]) {
+                 Competition *competition = [[Competition alloc] initFromDictionary:competitionDictionary];
+                 competition.gamesArray = [self getGamesByCompetitionID:competition.ID];
+                 [self.competitionsArray addObject:competition];
+                 [resultsArray addObject:competition];
+             }
+             
+             for (BaseObject *object in resultsArray) {
+                 [self mergeObject:object];
+             }
          }
      }];
 }
@@ -130,41 +218,35 @@
     handler();
 }
 
-- (NSMutableArray *)prepareResults {
-    NSMutableArray *resultsArray = [[NSMutableArray alloc] init];
-    
+- (void)prepareResults {
     for (Competition *competition in self.competitionsArray) {
-        [resultsArray addObject:competition];
-        [resultsArray addObjectsFromArray:competition.gamesArray];
+        [self.resultsArray addObject:competition];
+        [self.resultsArray addObjectsFromArray:competition.gamesArray];
     }
-
-    return resultsArray;
 }
 
-#pragma mark - Public API
+- (NSInteger)gameAlreadyExists:(NSInteger)gameID {
+    for (NSInteger i = 0; i < self.resultsArray.count; i++) {
+        Game *game = [self.resultsArray objectAtIndex:i];
+        
+        if (game.ID == gameID) {
+            return i;
+        }
+    }
+    
+    return INT_MAX;
+}
 
-- (void)prepareDataWithCompletion:(void (^)(NSMutableArray *itemsArray))handler {
-    [[WebServiceManager sharedInstance] requestDataFromURL:[NSString stringWithFormat:@"%@%@", MAIN_URL, GAMES_URL]
-                                                withLoader:YES
-                                            withCompletion:^(BOOL success, NSDictionary *dictionary, NSError *error)
-     {
-         if (success) {
-             [self parseDataFromDictionary:dictionary withCompletion:^{
-                 NSMutableArray *resultsArray = [self prepareResults];
-                 
-                 handler(resultsArray);
-                 
-                 // Initialize timer
-                 self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:kTimerTick
-                                                                     target:self
-                                                                   selector:@selector(updateData)
-                                                                   userInfo:nil
-                                                                    repeats:YES];
-             }];
-         } else {
-             handler(nil);
-         }
-     }];
+- (NSInteger)competitionAlreadyExists:(NSInteger)competitionID {
+    for (NSInteger i = 0; i < self.resultsArray.count; i++) {
+        Competition *competition = [self.resultsArray objectAtIndex:i];
+        
+        if (competition.ID == competitionID) {
+            return i;
+        }
+    }
+    
+    return INT_MAX;
 }
 
 @end

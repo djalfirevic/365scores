@@ -11,7 +11,7 @@
 #import "GameTableViewCell.h"
 #import "CompetitionTableViewCell.h"
 
-@interface HomeTableViewController()
+@interface HomeTableViewController() <DataManagerDelegate>
 @property (strong, nonatomic) NSMutableArray *itemsArray;
 @end
 
@@ -34,6 +34,8 @@
     
     self.tableView.tableFooterView = [[UIView alloc] init];
     
+    [[DataManager sharedInstance] setDelegate:self];
+    
     [self loadData];
 }
 
@@ -51,6 +53,16 @@
     cell.baseObject = object;
     
     return cell;
+}
+
+#pragma mark - DataManagerDelegate
+
+- (void)dataUpdatedAtIndex:(NSInteger)index {
+    NSLog(@"Index for update: %ld", (long)index);
+    
+    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]]
+                          withRowAnimation:UITableViewRowAnimationFade];
+
 }
 
 @end
