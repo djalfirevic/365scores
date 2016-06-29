@@ -119,6 +119,14 @@
         
         NSInteger index = [self gameAlreadyExists:game.ID];
         if (index != INT_MAX) {
+            // If there is a new result, update it
+            if (game.scoresArray.count > 0) {
+                Game *oldGame = [self.resultsArray objectAtIndex:index];
+                oldGame.scoresArray = game.scoresArray;
+                
+                [self.resultsArray replaceObjectAtIndex:index withObject:oldGame];
+            }
+            
             if ([self.delegate respondsToSelector:@selector(dataUpdatedAtIndex:)]) {
                 [self.delegate dataUpdatedAtIndex:index];
             }
