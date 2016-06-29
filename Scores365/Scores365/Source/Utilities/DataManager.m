@@ -227,10 +227,14 @@
 
 - (NSInteger)gameAlreadyExists:(NSInteger)gameID {
     for (NSInteger i = 0; i < self.resultsArray.count; i++) {
-        Game *game = [self.resultsArray objectAtIndex:i];
+        BaseObject *object = [self.resultsArray objectAtIndex:i];
         
-        if (game.ID == gameID) {
-            return i;
+        if ([object isKindOfClass:[Game class]]) {
+            Game *game = (Game *)object;
+            
+            if (game.ID == gameID) {
+                return i;
+            }
         }
     }
     
@@ -239,10 +243,14 @@
 
 - (NSInteger)competitionAlreadyExists:(NSInteger)competitionID {
     for (NSInteger i = 0; i < self.resultsArray.count; i++) {
-        Competition *competition = [self.resultsArray objectAtIndex:i];
+        BaseObject *object = [self.resultsArray objectAtIndex:i];
         
-        if (competition.ID == competitionID) {
-            return i;
+        if ([object isKindOfClass:[Competition class]]) {
+            Competition *competition = (Competition *)object;
+            
+            if (competition.ID == competitionID) {
+                return i;
+            }
         }
     }
     
