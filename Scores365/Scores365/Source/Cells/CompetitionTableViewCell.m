@@ -20,7 +20,7 @@
         Competition *competition = (Competition *)baseObject;
     
         self.asyncImageView.imageURL = [competition imageURL];
-        self.titleLabel.text = competition.name;
+        self.titleLabel.text = [competition getNameWithCountry];
     }
 }
 

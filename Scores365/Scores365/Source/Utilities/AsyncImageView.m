@@ -23,7 +23,9 @@
             NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageURL]];
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                self.image = [UIImage imageWithWebPData:data];
+                if (data) {
+                    self.image = [UIImage imageWithWebPData:data];
+                }
             });
         });
     }

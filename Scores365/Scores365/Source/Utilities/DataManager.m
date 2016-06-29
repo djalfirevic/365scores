@@ -99,6 +99,18 @@
      }];
 }
 
+- (NSString *)getCountryNameCountryID:(NSInteger)countryID {
+    for (Country *country in self.countriesArray) {
+        if (country.ID == countryID) {
+            return country.name;
+        }
+    }
+    
+    return nil;
+}
+
+#pragma mark - Private API
+
 - (void)mergeObject:(BaseObject *)object {
     
     // Games
@@ -127,8 +139,6 @@
     
 }
 
-#pragma mark - Private API
-
 - (NSMutableArray *)getGamesByCompetitionID:(NSInteger)competitionID {
     NSMutableArray *gamesArray = [[NSMutableArray alloc] init];
     
@@ -139,16 +149,6 @@
     }
     
     return gamesArray;
-}
-
-- (NSString *)getCountryNameCountryID:(NSInteger)countryID {
-    for (Country *country in self.countriesArray) {
-        if (country.ID == countryID) {
-            return country.name;
-        }
-    }
-    
-    return nil;
 }
 
 - (void)updateData {

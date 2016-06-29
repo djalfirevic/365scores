@@ -17,4 +17,5 @@
 @property (weak, nonatomic) id<DataManagerDelegate> delegate;
 + (id)sharedInstance;
 - (void)prepareDataWithCompletion:(void (^)(NSMutableArray *itemsArray))handler;
+- (NSString *)getCountryNameCountryID:(NSInteger)countryID;
 @end

@@ -11,4 +11,6 @@
 @interface Competition : BaseObject
 @property (nonatomic) NSInteger countryID;
 @property (strong, nonatomic) NSMutableArray *gamesArray;
+
+- (NSString *)getNameWithCountry;
 @end

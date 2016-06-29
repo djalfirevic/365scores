@@ -7,6 +7,7 @@
 //
 
 #import "Competition.h"
+#import "DataManager.h"
 
 @implementation Competition
 
@@ -38,6 +39,12 @@
                      (long)self.countryID];
     
     return url;
+}
+
+- (NSString *)getNameWithCountry {
+    return [NSString stringWithFormat:@"%@ - %@",
+            [[DataManager sharedInstance] getCountryNameCountryID:self.countryID],
+            self.name];
 }
 
 @end
