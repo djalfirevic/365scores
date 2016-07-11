@@ -15,4 +15,5 @@
 - (instancetype)initFromDictionary:(NSDictionary *)dictionary;
 - (NSString *)imageURL;
 - (void)logData;
+- (void)updateFromObject:(BaseObject *)object;
 @end

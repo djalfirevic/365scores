@@ -70,6 +70,16 @@
     return YES;
 }
 
+- (void)updateFromObject:(BaseObject *)object {
+    Game *game = (Game *)object;
+    
+    if (game.scoresArray.count > 0) {
+        self.scoresArray = game.scoresArray;
+    }
+    
+    // Update all other properties
+}
+
 #pragma mark - Private API
 
 - (NSString *)humanReadableStartTime {

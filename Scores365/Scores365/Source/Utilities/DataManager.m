@@ -112,37 +112,17 @@
 #pragma mark - Private API
 
 - (void)mergeObject:(BaseObject *)object {
-    
-    // Games
-    if ([object isKindOfClass:[Game class]]) {
-        Game *game = (Game *)object;
+    for (NSInteger i = 0; i < self.resultsArray.count; i++) {
+        BaseObject *obj = [self.resultsArray objectAtIndex:i];
         
-        NSInteger index = [self gameAlreadyExists:game.ID];
-        if (index != INT_MAX) {
-            // If there is a new result, update it
-            if (game.scoresArray.count > 0) {
-                Game *oldGame = [self.resultsArray objectAtIndex:index];
-                oldGame.scoresArray = game.scoresArray;
-            }
+        if ([obj isEqual:object]) {
+            [obj updateFromObject:object];
             
             if ([self.delegate respondsToSelector:@selector(dataUpdatedAtIndex:)]) {
-                [self.delegate dataUpdatedAtIndex:index];
+                [self.delegate dataUpdatedAtIndex:i];
             }
         }
     }
-    
-    // Competitions
-    if ([object isKindOfClass:[Competition class]]) {
-        Competition *competition = (Competition *)object;
-        
-        NSInteger index = [self competitionAlreadyExists:competition.ID];
-        if (index != INT_MAX) {
-            if ([self.delegate respondsToSelector:@selector(dataUpdatedAtIndex:)]) {
-                [self.delegate dataUpdatedAtIndex:index];
-            }
-        }
-    }
-    
 }
 
 - (NSMutableArray *)getGamesByCompetitionID:(NSInteger)competitionID {
@@ -229,38 +209,6 @@
         [self.resultsArray addObject:competition];
         [self.resultsArray addObjectsFromArray:competition.gamesArray];
     }
-}
-
-- (NSInteger)gameAlreadyExists:(NSInteger)gameID {
-    for (NSInteger i = 0; i < self.resultsArray.count; i++) {
-        BaseObject *object = [self.resultsArray objectAtIndex:i];
-        
-        if ([object isKindOfClass:[Game class]]) {
-            Game *game = (Game *)object;
-            
-            if (game.ID == gameID) {
-                return i;
-            }
-        }
-    }
-    
-    return INT_MAX;
-}
-
-- (NSInteger)competitionAlreadyExists:(NSInteger)competitionID {
-    for (NSInteger i = 0; i < self.resultsArray.count; i++) {
-        BaseObject *object = [self.resultsArray objectAtIndex:i];
-        
-        if ([object isKindOfClass:[Competition class]]) {
-            Competition *competition = (Competition *)object;
-            
-            if (competition.ID == competitionID) {
-                return i;
-            }
-        }
-    }
-    
-    return INT_MAX;
 }
 
 @end

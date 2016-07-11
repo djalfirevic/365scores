@@ -31,4 +31,18 @@
     NSLog(@"%@", self.name);
 }
 
+- (void)updateFromObject:(BaseObject *)object {
+    
+}
+
+- (BOOL)isEqual:(id)object {
+    BaseObject *comparingObject = (BaseObject *)object;
+    
+    if (comparingObject.ID == self.ID) {
+        return YES;
+    }
+    
+    return NO;
+}
+
 @end
