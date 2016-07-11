@@ -123,8 +123,6 @@
             if (game.scoresArray.count > 0) {
                 Game *oldGame = [self.resultsArray objectAtIndex:index];
                 oldGame.scoresArray = game.scoresArray;
-                
-                [self.resultsArray replaceObjectAtIndex:index withObject:oldGame];
             }
             
             if ([self.delegate respondsToSelector:@selector(dataUpdatedAtIndex:)]) {
