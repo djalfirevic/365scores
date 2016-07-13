@@ -47,8 +47,4 @@
             self.name];
 }
 
-- (void)updateFromObject:(BaseObject *)object {
-    
-}
-
 @end
