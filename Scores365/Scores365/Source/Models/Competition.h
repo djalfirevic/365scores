@@ -7,8 +7,9 @@
 //
 
 #import "BaseObject.h"
+#import "ImageProtocol.h"
 
-@interface Competition : BaseObject
+@interface Competition : BaseObject <ImageProtocol>
 @property (nonatomic) NSInteger countryID;
 @property (strong, nonatomic) NSMutableArray *gamesArray;
 

@@ -7,6 +7,7 @@
 //
 
 #import "BaseObject.h"
+#import "ImageProtocol.h"
 
-@interface Competitor : BaseObject
+@interface Competitor : BaseObject <ImageProtocol>
 @end

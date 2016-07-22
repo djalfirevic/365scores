@@ -75,6 +75,7 @@
 		C416E2EE1D2312AC00AE5F99 /* UIImage+WebP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+WebP.h"; sourceTree = "<group>"; };
 		C416E2EF1D2312AC00AE5F99 /* UIImage+WebP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+WebP.m"; sourceTree = "<group>"; };
 		C416E2F01D2312AC00AE5F99 /* WebP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WebP.framework; sourceTree = "<group>"; };
+		C4B035301D42A2300096B350 /* ImageProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageProtocol.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +168,7 @@
 				C406105E1D22A660006A6895 /* Country.m */,
 				C40610601D22A7AF006A6895 /* Competitor.h */,
 				C40610611D22A7AF006A6895 /* Competitor.m */,
+				C4B035301D42A2300096B350 /* ImageProtocol.h */,
 			);
 			path = Models;
 			sourceTree = "<group>";

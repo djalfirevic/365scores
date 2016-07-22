@@ -13,7 +13,6 @@
 @property (copy, nonatomic) NSString *name;
 
 - (instancetype)initFromDictionary:(NSDictionary *)dictionary;
-- (NSString *)imageURL;
 - (NSString *)cellIdentifier;
 - (void)logData;
 - (void)updateFromObject:(BaseObject *)object;

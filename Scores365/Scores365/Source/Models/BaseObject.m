@@ -23,10 +23,6 @@
 
 #pragma mark - Public API
 
-- (NSString *)imageURL {
-    return EMPTY_STRING;
-}
-
 - (NSString *)cellIdentifier {
     return EMPTY_STRING;
 }

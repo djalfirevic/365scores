@@ -33,14 +33,6 @@
 
 #pragma mark - Public API
 
-- (NSString *)imageURL {
-    NSString *url = [NSString stringWithFormat:@"%@image/upload/w_140,h_140,c_limit,f_webp,q_90,d_Countries:Round:default.png/Countries/Round/%ld",
-                     IMAGE_CACHE_URL,
-                     (long)self.countryID];
-    
-    return url;
-}
-
 - (NSString *)cellIdentifier {
     return @"CompetitionCell";
 }
@@ -49,6 +41,16 @@
     return [NSString stringWithFormat:@"%@ - %@",
             [[DataManager sharedInstance] getCountryNameCountryID:self.countryID],
             self.name];
+}
+
+#pragma mark - ImageProtocol
+
+- (NSString *)imageURL {
+    NSString *url = [NSString stringWithFormat:@"%@image/upload/w_140,h_140,c_limit,f_webp,q_90,d_Countries:Round:default.png/Countries/Round/%ld",
+                     IMAGE_CACHE_URL,
+                     (long)self.countryID];
+    
+    return url;
 }
 
 @end

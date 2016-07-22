@@ -10,7 +10,7 @@
 
 @implementation Competitor
 
-#pragma mark - Public API
+#pragma mark - ImageProtocol
 
 - (NSString *)imageURL {
     NSString *url = [NSString stringWithFormat:@"%@image/upload/w_48,h_48,c_limit,f_webp,q_90,d_Competitors:default1.png/Competitors/%ld",
