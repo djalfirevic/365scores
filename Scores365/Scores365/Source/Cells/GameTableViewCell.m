@@ -23,12 +23,20 @@
         if (game.competitorsArray.count == 2) {
             // Home
             Competitor *home = [game.competitorsArray firstObject];
-            self.asyncImageView.imageURL = [home imageURL];
+            
+            if ([home conformsToProtocol:@protocol(ImageProtocol)]) {
+                self.asyncImageView.imageURL = [home imageURL];
+            }
+            
             self.titleLabel.text = home.name;
             
             // Away
             Competitor *away = [game.competitorsArray lastObject];
-            self.awayAsyncImageView.imageURL = [away imageURL];
+            
+            if ([away conformsToProtocol:@protocol(ImageProtocol)]) {
+                self.awayAsyncImageView.imageURL = [away imageURL];
+            }
+            
             self.awayTitleLabel.text = away.name;
             
             // Score

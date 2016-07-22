@@ -19,7 +19,10 @@
     if ([baseObject isKindOfClass:[Competition class]]) {
         Competition *competition = (Competition *)baseObject;
     
-        self.asyncImageView.imageURL = [competition imageURL];
+        if ([competition conformsToProtocol:@protocol(ImageProtocol)]) {
+            self.asyncImageView.imageURL = [competition imageURL];
+        }
+        
         self.titleLabel.text = [competition getNameWithCountry];
     }
 }
