@@ -48,7 +48,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     BaseObject *object = [self.itemsArray objectAtIndex:indexPath.row];
     
-    BaseTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[BaseTableViewCell getReusableIdentifier:[object class]]
+    BaseTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[object cellIdentifier]
                                                               forIndexPath:indexPath];
     cell.baseObject = object;
     

@@ -41,6 +41,10 @@
     return url;
 }
 
+- (NSString *)cellIdentifier {
+    return @"CompetitionCell";
+}
+
 - (NSString *)getNameWithCountry {
     return [NSString stringWithFormat:@"%@ - %@",
             [[DataManager sharedInstance] getCountryNameCountryID:self.countryID],

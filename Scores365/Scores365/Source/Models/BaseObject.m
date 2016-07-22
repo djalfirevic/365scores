@@ -27,6 +27,10 @@
     return EMPTY_STRING;
 }
 
+- (NSString *)cellIdentifier {
+    return EMPTY_STRING;
+}
+
 - (void)logData {
     NSLog(@"%@", self.name);
 }

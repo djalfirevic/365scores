@@ -14,6 +14,7 @@
 
 - (instancetype)initFromDictionary:(NSDictionary *)dictionary;
 - (NSString *)imageURL;
+- (NSString *)cellIdentifier;
 - (void)logData;
 - (void)updateFromObject:(BaseObject *)object;
 @end

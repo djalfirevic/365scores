@@ -48,6 +48,10 @@
 
 #pragma mark - Public API
 
+- (NSString *)cellIdentifier {
+    return @"GameCell";
+}
+
 - (NSString *)score {
     NSNumber *first = self.scoresArray[0];
     NSNumber *second = self.scoresArray[1];

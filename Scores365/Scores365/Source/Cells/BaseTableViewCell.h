@@ -14,6 +14,4 @@
 @property (weak, nonatomic) IBOutlet AsyncImageView *asyncImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) BaseObject *baseObject;
-
-+ (NSString *)getReusableIdentifier:(Class)objectClass;
 @end

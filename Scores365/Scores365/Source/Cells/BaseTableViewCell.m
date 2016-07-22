@@ -18,18 +18,6 @@
     _baseObject = baseObject;
 }
 
-#pragma mark - Public API
-
-+ (NSString *)getReusableIdentifier:(Class)objectClass {
-    if (objectClass == [Game class]) {
-        return @"GameCell";
-    } else if (objectClass == [Competition class]) {
-        return @"CompetitionCell";
-    }
-    
-    return EMPTY_STRING;
-}
-
 #pragma mark - Cell lifecycle
 
 - (void)prepareForReuse {
