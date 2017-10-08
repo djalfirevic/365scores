@@ -1,3 +1,3 @@
 # 365scores
-iOS test application for 365scores.com
-Language: Objective-C
+
+iOS Coding Challenge, 2016. @365scores
